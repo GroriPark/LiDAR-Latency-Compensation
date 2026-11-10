@@ -349,7 +349,7 @@ def main(args):
     base_dir = Path(getattr(
         all_args,
         "results_dir",
-        r"C:\Users\pgr51\Desktop\Gardian\GARDIANS_DRONE_SWARM\on-policy\ES3_lidar_raw"
+        "results/raw_lidar"
     ))
     run_dir = base_dir / all_args.env_name / all_args.algorithm_name / all_args.experiment_name
     run_dir.mkdir(parents=True, exist_ok=True)

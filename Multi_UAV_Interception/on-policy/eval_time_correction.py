@@ -22,7 +22,7 @@ from onpolicy.algorithms.r_mappo.algorithm.r_actor_critic import R_Actor
 
 # ---------- [설정] 경로 및 디바이스 ----------
 # ⚠️ 여기 꼭 LiDAR로 학습한 actor.pt 경로로 바꿔줘
-actor_model_path = r"C:\Users\pgr51\OneDrive\바탕 화면\시간오차보정\actor.pt"
+actor_model_path = "/your/directory/actor.pt"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # ---------- [설정] 하이퍼파라미터 ----------

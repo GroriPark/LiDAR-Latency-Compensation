@@ -22,7 +22,7 @@ from onpolicy.algorithms.r_mappo.algorithm.r_actor_critic import R_Actor
 
 
 # ---------- [설정] 경로 및 디바이스 ----------
-actor_model_path = r"C:\Users\pgr51\Desktop\Gardian\GARDIANS_DRONE_SWARM\on-policy\적군속도6(LiDAR Raw)\UAV\rmappo\drone_formation_v1\wandb\run-20260521_111407-23cspb2y\files\actor.pt"
+actor_model_path = "/your/directory/actor.pt"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # ---------- [설정] 하이퍼파라미터 ----------

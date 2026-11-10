@@ -2,7 +2,7 @@
 
 A multi-agent reinforcement learning project in which UAVs cooperate to protect a leader drone and intercept an approaching dynamic obstacle in AirSim. The project uses MAPPO / RMAPPO policies and LiDAR observations, with experiments comparing raw LiDAR against motion- and latency-compensated LiDAR.
 
-> This repository contains experimental code. The Unreal/AirSim simulation project, AirSim `settings.json`, and trained checkpoints are not included. Some entry points require import and output-path changes before execution. These instructions are based on source inspection; execution with a running simulator has not been verified.
+> This repository contains experimental code. The Unreal/AirSim simulation project, AirSim `settings.json`, and trained checkpoints are not included. Some entry points require import changes and checkpoint-path configuration before execution. These instructions are based on source inspection; execution with a running simulator has not been verified.
 
 ## Relationship to the original MAPPO implementation
 
@@ -80,15 +80,15 @@ Running scripts directly from `on-policy/` makes the local `onpolicy` package av
 
 1. **General training environment import:** `train_UAV.py` references `onpolicy.envs.make_env`, which is missing. To use the compensated environment, you can change the import to `AirSimMultiDroneEnv` from `onpolicy.envs.make_env_fin`. Equivalence with the original missing environment must be checked.
 2. **Missing raw evaluation environment:** `eval_LiDAR_Raw.py` references the missing `onpolicy.envs.make_env_no_time_correction` module. Restore that module or explicitly select an evaluation environment whose observation format matches the checkpoint.
-3. **Training output path:** The default `base_dir` in `main()` of both training scripts is an absolute path on the developer's PC. Change it to a suitable path, such as `Path("results")`. `config_UAV.py` does not register `--results_dir`, so the path cannot currently be set through that CLI argument.
-4. **Checkpoint path:** Update `actor_model_path` near the top of each evaluation script to your own `actor.pt` path. Match the observation dimension, hidden size, and RNN configuration to those used during training.
+3. **Training output path:** The default `base_dir` is `results/corrected` in `train_UAV.py` and `results/raw_lidar` in `train_UAV_LiDAR_Raw.py`, relative to the working directory. Edit `base_dir` in `main()` to change it. `config_UAV.py` does not register `--results_dir`, so the path cannot currently be set through that CLI argument.
+4. **Checkpoint path:** Replace the `/your/directory/actor.pt` placeholder in `actor_model_path` near the top of each evaluation script with your own checkpoint path. Match the observation dimension, hidden size, and RNN configuration to those used during training.
 5. **Package installation directory:** `setup.py` reads `on-policy/README.md`, which is included. Run `python -m pip install -e .` from `on-policy/` for an editable installation. Runtime dependencies must be installed separately.
 
 Observation dimensions and operating conditions can differ between environment files. When connecting an existing model to an experimental environment such as `eval_env_control_raw12.py`, verify compatibility rather than relying on file names.
 
 ## Training
 
-Start the simulator and update the output path described above, then run these commands from `on-policy/`:
+Start the simulator and check the output paths described above, then run these commands from `on-policy/`:
 
 ```powershell
 # Raw LiDAR + RMAPPO, with local TensorBoard logging
